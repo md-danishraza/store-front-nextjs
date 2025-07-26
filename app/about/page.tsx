@@ -1,9 +1,13 @@
 import React from 'react'
 
-function AboutPage() {
+async function AboutPage() {
+  
+
+ 
   return (
     <div>
       About
+      
     </div>
   )
 }
