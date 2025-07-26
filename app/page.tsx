@@ -1,13 +1,13 @@
 import React from 'react'
-import { Button } from '@/components/ui/button'
+
+import Hero from '@/components/home/Hero'
+import FeaturedProducts from '@/components/home/FeaturedProducts'
 function HomePage() {
   return (
-    <div>
-      HomePage
-      <Button variant='destructive' size='lg' className='capitalize m-8'>
-        Click Me
-      </Button>
-    </div>
+    <>
+    <Hero />
+    <FeaturedProducts />
+  </>
   )
 }
 
