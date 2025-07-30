@@ -4,6 +4,8 @@ import "./globals.css";
 import Navbar from "@/components/navbar/Navbar";
 import Container from "@/components/global/Container";
 import Providers from "./Providers";
+import { Toaster } from "@/components/ui/sonner";
+import {ClerkProvider} from "@clerk/nextjs";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -16,7 +18,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "StoreFront nextjs",
+  title: "StoreFront",
   description: "Next js app store and ecommerce",
 };
 
@@ -26,17 +28,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-       <Providers>
-       <Navbar/>
-        <Container className="py-20">
-        {children}
-        </Container>
-       </Providers>
-      </body>
-    </html>
+      <ClerkProvider>
+        <html lang="en" suppressHydrationWarning>
+          <body
+            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          >
+            <Providers>
+            <Navbar/>
+              <Container className="py-20">
+              {children}
+              </Container>
+              <Toaster />
+            </Providers>
+          </body>
+        </html>
+       </ClerkProvider>
   );
 }
