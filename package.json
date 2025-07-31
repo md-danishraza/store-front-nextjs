@@ -30,7 +30,8 @@
     "sonner": "^2.0.6",
     "tailwind-merge": "^3.3.1",
     "tailwindcss-animate": "^1.0.7",
-    "use-debounce": "^10.0.5"
+    "use-debounce": "^10.0.5",
+    "zod": "^4.0.14"
   },
   "devDependencies": {
     "@faker-js/faker": "^9.9.0",
