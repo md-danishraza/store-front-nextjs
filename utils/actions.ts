@@ -3,7 +3,8 @@
 import db from "@/utils/db";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import { productSchema } from "./validationSchemas";
+import { imageSchema, productSchema } from "./validationSchemas";
+import { uploadImage } from "./supabase_storage";
 export async function fetchFeaturedProducts() {
   const products = await db.product.findMany({
     where: {
@@ -69,8 +70,14 @@ export const createProductAction = async (
 
   try {
     const rawData = Object.fromEntries(formData);
+    const image = formData.get("image") as File;
     // safe parse for custom error messages gracefully
     const validatedData = productSchema.safeParse(rawData);
+    const validatedImage = imageSchema.safeParse({ image: image });
+
+    if (!validatedImage.success) {
+      throw new Error(validatedImage.error?.issues[0]?.message);
+    }
     // if not valid inputs
     if (!validatedData.success) {
       // getting all errors messages of array
@@ -79,15 +86,34 @@ export const createProductAction = async (
       throw new Error(errors.join(","));
     }
 
-    // await db.product.create({
-    //   data: {
-    //     ...validatedData.data,
-    //     image: "/images/test.png",
-    //     clerkId: user.id,
-    //   },
-    // });
-    return { message: "product created" };
+    // upload image
+    const fullPath = await uploadImage(validatedImage.data.image);
+    await db.product.create({
+      data: {
+        ...validatedData.data,
+        image: fullPath,
+        clerkId: user.id,
+      },
+    });
   } catch (error) {
     return renderError(error);
   }
+  redirect("/admin/products");
+};
+
+const getAdminUser = async () => {
+  const user = await getAuthUser();
+  if (user.id !== process.env.ADMIN_USER_ID) redirect("/");
+  return user;
+};
+export const fetchAdminProducts = async () => {
+  // check admin
+  await getAdminUser();
+  // find all products
+  const products = await db.product.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+  return products;
 };
