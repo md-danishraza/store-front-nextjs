@@ -5,6 +5,8 @@ import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { imageSchema, productSchema } from "./validationSchemas";
 import { uploadImage } from "./supabase_storage";
+import { deleteImage } from "./supabase_storage";
+import { revalidatePath } from "next/cache";
 export async function fetchFeaturedProducts() {
   const products = await db.product.findMany({
     where: {
@@ -116,4 +118,75 @@ export const fetchAdminProducts = async () => {
     },
   });
   return products;
+};
+
+// delete a product
+export const deleteProductAction = async (prevState: { productId: string }) => {
+  const { productId } = prevState;
+  await getAdminUser();
+
+  try {
+    const product = await db.product.delete({
+      where: {
+        id: productId,
+      },
+    });
+    await deleteImage(product.image);
+    revalidatePath("/admin/products");
+    return { message: "product removed" };
+  } catch (error) {
+    return renderError(error);
+  }
+};
+
+// admin single product detail fetch, update and updatewithImage
+export const fetchAdminProductDetails = async (productId: string) => {
+  await getAdminUser();
+  const product = await db.product.findUnique({
+    where: {
+      id: productId,
+    },
+  });
+  if (!product) redirect("/admin/products");
+  return product;
+};
+
+export const updateProductAction = async (
+  prevState: any,
+  formData: FormData
+) => {
+  return { message: "Product updated successfully" };
+};
+
+// update image
+// id and url is hidden input
+export const updateProductImageAction = async (
+  prevState: any,
+  formData: FormData
+) => {
+  await getAuthUser();
+  try {
+    const image = formData.get("image") as File;
+    const productId = formData.get("id") as string;
+    const oldImageUrl = formData.get("url") as string;
+
+    const validatedFile = imageSchema.safeParse({ image: image });
+    if (!validatedFile.success) {
+      throw new Error(validatedFile.error?.issues[0]?.message);
+    }
+    const fullPath = await uploadImage(validatedFile.data.image);
+    await deleteImage(oldImageUrl);
+    await db.product.update({
+      where: {
+        id: productId,
+      },
+      data: {
+        image: fullPath,
+      },
+    });
+    revalidatePath(`/admin/products/${productId}/edit`);
+    return { message: "Product Image updated successfully" };
+  } catch (error) {
+    return renderError(error);
+  }
 };
