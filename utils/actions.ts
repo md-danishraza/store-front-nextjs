@@ -6,7 +6,7 @@
 import db from "@/utils/db";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import { imageSchema, productSchema } from "./validationSchemas";
+import { imageSchema, productSchema, reviewSchema } from "./validationSchemas";
 import { uploadImage } from "./supabase_storage";
 import { deleteImage } from "./supabase_storage";
 import { revalidatePath } from "next/cache";
@@ -252,3 +252,38 @@ export const fetchUserFavorites = async () => {
   });
   return favorites;
 };
+
+// review
+export const createReviewAction = async (
+  prevState: any,
+  formData: FormData
+) => {
+  const user = await getAuthUser();
+  try {
+    const rawData = Object.fromEntries(formData);
+
+    const validatedFields = reviewSchema.safeParse(rawData);
+    if (!validatedFields.success) {
+      // getting all errors messages of array
+      const errors = validatedFields.error.issues.map((issue) => issue.message);
+      // returning into a combined string message
+      throw new Error(errors.join(","));
+    }
+    await db.review.create({
+      data: {
+        ...validatedFields.data,
+        clerkId: user.id,
+      },
+    });
+    revalidatePath(`/products/${validatedFields.data.productId}`);
+    return { message: "Review submitted successfully" };
+  } catch (error) {
+    return renderError(error);
+  }
+};
+
+export const fetchProductReviews = async () => {};
+export const fetchProductReviewsByUser = async () => {};
+export const deleteReviewAction = async () => {};
+export const findExistingReview = async () => {};
+export const fetchProductRating = async () => {};
