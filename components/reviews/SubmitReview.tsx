@@ -11,6 +11,7 @@ import { useUser } from "@clerk/nextjs";
 
 function SubmitReview({productId}:{productId:string}) {
     const [isReviewFormVisible,setReviewFormVisible] = useState(false);
+    // only for getting name and profile image if exist on clerk
     const {user} = useUser();
 
 

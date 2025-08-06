@@ -1,9 +1,10 @@
 import React from 'react'
 import { FaStar } from 'react-icons/fa';
-function ProductRating({ productId }: { productId: string }) {
+import { fetchProductRating } from '@/utils/actions';
+
+async function ProductRating({ productId }: { productId: string }) {
   console.log(productId)
-    const rating = 4.2;
-    const count = 25;
+  const { rating, count } = await fetchProductRating({productId});
   
     const className = `flex gap-1 items-center text-md mt-1 mb-4`;
     const countValue = `(${count}) reviews`;
@@ -16,3 +17,5 @@ function ProductRating({ productId }: { productId: string }) {
 }
 
 export default ProductRating
+
+  

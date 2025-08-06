@@ -11,14 +11,21 @@ import SubmitReview from '@/components/reviews/SubmitReview'
 import ProductReviews from '@/components/reviews/ProductReviews'
 
 import Image from 'next/image'
+
+import { auth } from '@clerk/nextjs/server'
 // action 
 import { fetchSingleProduct } from '@/utils/actions'
-import SectionTitle from '@/components/global/SectionTitle'
+import { findExistingReview } from '@/utils/actions'
 async function SingleProductPage({params}:{params:{id:string}}) {
     const id = params.id
     const product = await fetchSingleProduct(id);
     const { name, image, company, description, price } = product;
     const dollarsAmount = formatCurrency(price);
+
+    // disable submit review component if !user or already reviewed
+    const {userId} =  auth();
+    // if not user dont show at all but if user then check existing 
+    const showReview = userId && !(await findExistingReview(userId,id));
   return (
     <section>
     <BreadCrumbs productName={name} />
@@ -53,11 +60,12 @@ async function SingleProductPage({params}:{params:{id:string}}) {
       </div>
     </div>
     {/* REVIEW */}
-     <div className='mt-24'>
-     <SectionTitle text='Reviews'/>
+    
     <ProductReviews productId={params.id} />
-    <SubmitReview productId={params.id} />
-     </div>
+    {
+      showReview && <SubmitReview productId={params.id} />
+    }
+  
   </section>
   )
 }
