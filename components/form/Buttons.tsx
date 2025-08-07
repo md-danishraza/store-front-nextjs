@@ -74,7 +74,8 @@ export const IconButton = ({actionType}:{actionType:actionType})=>{
 
 
 
-// sign in page
+// sign in page - if user hasn't logged in 
+// and tries to favorite the product
 export const CardSignInButton = () => {
   return (
     <SignInButton mode="modal">
@@ -109,5 +110,18 @@ export const CardSubmitButton = ({ isFavorite }: { isFavorite: boolean }) => {
         <FaRegHeart />
       )}
     </Button>
+  );
+};
+
+
+// at product page - will prompt for sign 
+// for adding quantity and add to cart
+export const ProductSignInButton = () => {
+  return (
+    <SignInButton mode="modal">
+    <Button type="button" size="default" className="mt-8">
+      Please Sign In
+    </Button>
+  </SignInButton>
   );
 };
