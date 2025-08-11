@@ -27,7 +27,7 @@ export function SubmitButton({
     <Button
       type='submit'
       disabled={pending}
-      className={cn('capitalize', className)}
+      className={cn('capitalize font-secondary', className)}
       size={size}
     >
       {pending ? (
@@ -83,7 +83,7 @@ export const CardSignInButton = () => {
         type="button"
         size="icon"
         variant="outline"
-        className="p-2 cursor-pointer"
+        className="p-2 cursor-pointer font-secondary"
         asChild
       >
         <FaRegHeart />
@@ -119,7 +119,7 @@ export const CardSubmitButton = ({ isFavorite }: { isFavorite: boolean }) => {
 export const ProductSignInButton = () => {
   return (
     <SignInButton mode="modal">
-    <Button type="button" size="default" className="mt-8">
+    <Button type="button" size="default" className="mt-8 font-secondary">
       Please Sign In
     </Button>
   </SignInButton>

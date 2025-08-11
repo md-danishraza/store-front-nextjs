@@ -5,6 +5,7 @@ import { createOrderAction } from "@/utils/actions";
 import FormContainer from "../form/FormContainer";
 import { SubmitButton } from "../form/Buttons";
 import { Cart } from "@prisma/client";
+import AnimatedCountUp from "../global/AnimatedCount";
 
 function CartTotals({ cart }: { cart: Cart }) {
   const { cartTotal, shipping, tax, orderTotal } = cart;
@@ -38,7 +39,9 @@ function CartTotalRow({
     <>
       <p className="flex justify-between text-sm">
         <span>{label}</span>
-        <span>{formatCurrency(amount)}</span>
+        <span>
+        <AnimatedCountUp amount={amount} />
+        </span>
       </p>
       {lastRow ? null : <Separator className="my-2" />}
     </>

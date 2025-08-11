@@ -9,12 +9,12 @@ import { Suspense } from 'react';
 function Navbar() {
   return (
   <nav className='border-b'>
-    <Container className='flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 py-8'>
-      <Logo/>
+    <Container className='flex  sm:flex-row flex-wrap justify-between sm:items-center gap-4 py-8 transition-all '>
+      <Logo />
       <Suspense>
-      <NavSearch />
-    </Suspense>
-      <div className='flex gap-4 items-center'>
+      <NavSearch  className='order-3 md:order-2 transition-all'/>
+      </Suspense>
+      <div className='flex gap-4 items-center order-2 md:order-3'>
         <CartButton/>
         <DarkMode/>
         <LinksDropdown/>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { primaryFont, secondaryFont, paragraphFont } from "@/lib/fonts"
 import Navbar from "@/components/navbar/Navbar";
 import Container from "@/components/global/Container";
 import Providers from "./Providers";
@@ -29,9 +30,11 @@ export default function RootLayout({
 }>) {
   return (
       <ClerkProvider>
-        <html lang="en" suppressHydrationWarning>
+        <html lang="en" suppressHydrationWarning
+         className={`${primaryFont.variable} ${secondaryFont.variable} ${paragraphFont.variable}`}
+        >
           <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+            className={`${geistSans.variable} ${geistMono.variable} antialiased font-paragraph`}
           >
             <Providers>
             <Navbar/>

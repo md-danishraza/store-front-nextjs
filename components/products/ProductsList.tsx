@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Product } from '@prisma/client';
 import Image from 'next/image';
 import FavoriteToggleButton from './FavoriteToggleButton';
+
 function ProductsList({products}:{products:Product[]}) {
   return (
     <div className='mt-12 grid gap-y-8'>
@@ -33,7 +34,7 @@ function ProductsList({products}:{products:Product[]}) {
                     <h4 className='text-muted-foreground'>{company}</h4>
                   </div>
                   <p className='text-muted-foreground text-lg md:ml-auto'>
-                    {dollarsAmount}
+                   {dollarsAmount}
                   </p>
                 </CardContent>
               </Card>

@@ -8,7 +8,7 @@ function Hero() {
     <section className='grid lg:grid-cols-2 gap-24 items-center'>
         {/* content */}
         <div className='order-2 lg:order-1'>
-          <h1 className='max-w-2xl text-4xl font-bold tracking-tight sm:text-6xl '>
+          <h1 className='max-w-2xl text-4xl font-bold tracking-tight xl:leading-[76px] sm:text-6xl '>
             We are changing the way people shop
           </h1>
           <p className='mt-8 max-w-xl text-lg leading-8 texxt-muted-foreground'>

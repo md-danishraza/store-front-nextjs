@@ -31,7 +31,7 @@ function LinksDropdown() {
         <SignedOut>
           <DropdownMenuItem>
           <SignInButton mode='modal'>
-            <button className='w-full text-left'>
+            <button className='w-full text-left font-secondary'>
               Sign In
             </button>
           </SignInButton>
@@ -39,7 +39,7 @@ function LinksDropdown() {
           <DropdownMenuSeparator/>
           <DropdownMenuItem>
           <SignUpButton mode='modal'>
-          <button className='w-full text-left'>
+          <button className='w-full text-left font-secondary'>
               Sign Up
             </button>
           </SignUpButton>
@@ -50,7 +50,7 @@ function LinksDropdown() {
           links.map(link=>{
             if((link.label === 'dashboard') && !isAdmin) return null;
             return <DropdownMenuItem key={link.href}>
-              <Link href={link.href} className='capitalize w-full'>
+              <Link href={link.href} className='capitalize w-full font-secondary'>
               {link.label}
               </Link>
             </DropdownMenuItem>

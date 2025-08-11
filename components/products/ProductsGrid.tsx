@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Card,CardContent } from '../ui/card'
 import Image from 'next/image'
 import FavoriteToggleButton from './FavoriteToggleButton'
+
 function ProductsGrid({products}:{products:Product[]}) {
   return (
     <div className='mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3'>
@@ -12,7 +13,7 @@ function ProductsGrid({products}:{products:Product[]}) {
     products.map(product=>{
         const {name,price,image} = product
         const productId = product.id
-        const dollarAmount = formatCurrency(price)
+        const dollarAmount = formatCurrency(price) 
       return (
         <article key={productId} className='relative group'>
           {/* products link */}
@@ -29,7 +30,7 @@ function ProductsGrid({products}:{products:Product[]}) {
                   <div className='mt-4 text-center'>
                     <h2 className='text-lg  capitalize'>{name}</h2>
                     <p className='text-muted-foreground  mt-2'>
-                      {dollarAmount}
+                    {dollarAmount}
                     </p>
                   </div>
                 </CardContent>
