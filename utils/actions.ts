@@ -625,11 +625,23 @@ export const updateCartItemAction = async ({
 // orders
 export const createOrderAction = async (prevState: any, formData: FormData) => {
   const user = await getAuthUser();
+  // for checkout page
+  let orderId: null | string = null;
+  let cartId: null | string = null;
   try {
     const cart = await fetchOrCreateCart({
       userId: user.id,
       errorOnFailure: true,
     });
+    cartId = cart.id;
+    // deleting all previous false order so only one will be available
+    await db.order.deleteMany({
+      where: {
+        clerkId: user.id,
+        isPaid: false,
+      },
+    });
+    // creating the order
     const order = await db.order.create({
       data: {
         clerkId: user.id,
@@ -640,16 +652,12 @@ export const createOrderAction = async (prevState: any, formData: FormData) => {
         email: user.emailAddresses[0].emailAddress,
       },
     });
-    // delete cart
-    await db.cart.delete({
-      where: {
-        id: cart.id,
-      },
-    });
+    orderId = order.id;
   } catch (error) {
     return renderError(error);
   }
-  redirect("/orders");
+  // will turn order true after payment and empty the cart
+  redirect(`/checkout?orderId=${orderId}&cartId=${cartId}`);
 };
 // fetch orders for user
 export const fetchUserOrders = async () => {
