@@ -623,6 +623,10 @@ export const updateCartItemAction = async ({
 };
 
 // orders
+// coming soon
+export const checkoutComingSoon = async () => {
+  return { message: "Feature Coming Soon" };
+};
 export const createOrderAction = async (prevState: any, formData: FormData) => {
   const user = await getAuthUser();
   // for checkout page

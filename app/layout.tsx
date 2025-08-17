@@ -1,4 +1,3 @@
-"use client";
 import Script from "next/script";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
@@ -8,7 +7,9 @@ import Navbar from "@/components/navbar/Navbar";
 import Container from "@/components/global/Container";
 import Providers from "./Providers";
 import { Toaster } from "@/components/ui/sonner";
-import {ClerkProvider} from "@clerk/nextjs";
+import { ClerkProvider } from '@clerk/nextjs';
+import Footer from "@/components/footer/footer";
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -39,11 +40,19 @@ export default function RootLayout({
             className={`${geistSans.variable} ${geistMono.variable} antialiased font-paragraph`}
           >
             <Providers>
-            <Navbar/>
-              <Container className="py-20">
-              {children}
-              </Container>
-              <Toaster />
+              <main className="flex flex-col min-h-screen w-full">
+                <Navbar />
+
+                {/* Content wrapper that grows */}
+                <div className="flex-1">
+                  <Container className="py-8">
+                    {children}
+                  </Container>
+                </div>
+
+                <Toaster />
+                <Footer />
+              </main>
             </Providers>
             <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="beforeInteractive" />
           </body>

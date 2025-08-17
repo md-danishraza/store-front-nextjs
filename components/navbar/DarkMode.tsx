@@ -21,13 +21,13 @@ function DarkMode() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")} className="border-b">
+        <DropdownMenuItem onClick={() => setTheme("light")} className="border-b font-secondary">
           Light
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")} className="border-b">
+        <DropdownMenuItem onClick={() => setTheme("dark")} className="border-b font-secondary">
           Dark
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")} className="border-b">
+        <DropdownMenuItem onClick={() => setTheme("system")} className="border-b font-secondary">
           System
         </DropdownMenuItem>
       </DropdownMenuContent>
