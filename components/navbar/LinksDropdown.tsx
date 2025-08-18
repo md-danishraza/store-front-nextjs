@@ -10,7 +10,7 @@ import Link from 'next/link';
 import { Button } from '../ui/button';
 import { links } from '@/utils/links';
 import UserIcon from './UserIcon';
-import { SignedIn, SignedOut, SignInButton, SignUp, SignUpButton } from '@clerk/nextjs';
+import { SignedIn, SignedOut, SignInButton, SignUpButton } from '@clerk/nextjs';
 import SignOutLink from './SignOutLink';
 import { auth } from '@clerk/nextjs/server';
 // import { link } from 'fs';

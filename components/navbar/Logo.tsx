@@ -2,7 +2,6 @@
 // filepath: /d:/codes/Nextjs/store_front/components/navbar/Logo.tsx
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { Button } from "../ui/button";
 import { useTheme } from "next-themes";
 import lightLogo from "@/public/logo/sfLight.png";
 import darkLogo from "@/public/logo/sfDark.png";
