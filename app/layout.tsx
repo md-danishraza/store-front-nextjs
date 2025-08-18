@@ -24,6 +24,17 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "StoreFront",
   description: "Next js app store and ecommerce",
+  icons: [
+    {
+      media: '(prefers-color-scheme: light)',
+      url: '/logo/sfDark.png',
+    },
+    {
+      media: '(prefers-color-scheme: dark)',
+      url: '/logo/sfLight.png',
+    },
+  ],
+
 };
 
 export default function RootLayout({
