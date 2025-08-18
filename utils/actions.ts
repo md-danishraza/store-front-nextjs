@@ -161,7 +161,34 @@ export const updateProductAction = async (
   prevState: any,
   formData: FormData
 ) => {
-  return { message: "Product updated successfully" };
+  await getAdminUser();
+  try {
+    const productId = formData.get("id") as string;
+    const rawData = Object.fromEntries(formData);
+
+    const validatedData = productSchema.safeParse(rawData);
+
+    // if not valid inputs
+    if (!validatedData.success) {
+      // getting all errors messages of array
+      const errors = validatedData.error.issues.map((issue) => issue.message);
+      // returning into a combined string message
+      throw new Error(errors.join(","));
+    }
+
+    await db.product.update({
+      where: {
+        id: productId,
+      },
+      data: {
+        ...validatedData.data,
+      },
+    });
+    revalidatePath(`/admin/products/${productId}/edit`);
+    return { message: "Product updated successfully" };
+  } catch (error) {
+    return renderError(error);
+  }
 };
 
 // update image
@@ -625,7 +652,7 @@ export const updateCartItemAction = async ({
 // orders
 // coming soon
 export const checkoutComingSoon = async () => {
-  return { message: "Feature Coming Soon" };
+  return { message: "Razorpay not live (coming soon)!" };
 };
 export const createOrderAction = async (prevState: any, formData: FormData) => {
   const user = await getAuthUser();

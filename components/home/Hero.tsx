@@ -15,7 +15,7 @@ function Hero() {
           Step into a world where style meets soul—welcome to your new favorite store. Whether you're chasing timeless elegance or daring trends, we’ve curated a collection that brings quality, comfort, and a touch of magic to every purchase.
           </p>
           <Button asChild size='lg' className='mt-10 font-secondary'>
-            <Link href="/products">Out Products</Link>
+            <Link href="/products">Our Products</Link>
           </Button>
         </div>
         {/* carousel */}
